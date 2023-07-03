@@ -27,8 +27,12 @@ export class AuthService {
       // return the saved user
       return user;
     } catch (error) {
+      console.log(error.code,'my code error')
+      if (error.code == 'P2002') {
+        throw new ForbiddenException('Credentials taken');
+      }
       if (error instanceof PrismaClientKnownRequestError) {
-        if (error.code === 'P2002') {
+        if (error.code == 'P2002') {
           throw new ForbiddenException('Credentials taken');
         }
       }
@@ -43,11 +47,12 @@ export class AuthService {
       },
     });
     //check if user exists
+    console.log(user, 'the user')
     if (!user) throw new ForbiddenException('Credentials Incorrect');
     
     // check if password matches
     const pwMatches = await argon.verify(user.hash, dto.password);
-    console.log(pwMatches)
+    console.log(pwMatches, 'matches')
     if (!pwMatches) throw new ForbiddenException('Credentials Incorrect');
    
    //return user  
