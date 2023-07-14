@@ -34,6 +34,9 @@ export class BookmarkService {
         id: bookmarkId,
       },
     });
+    if (!bookmark) {
+        throw new ForbiddenException('no such record');
+      }
 
     return bookmark;
   }
