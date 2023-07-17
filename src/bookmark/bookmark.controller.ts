@@ -16,7 +16,9 @@ import { GetUser } from '../auth/decorator';
 import { JwtGuard } from '../auth/guard';
 import { CreateBookmarkDto } from './dto/createBookmark.dto';
 import { EditBookmarkDto } from './dto/editBookmark.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Bookmarks')
 @UseGuards(JwtGuard)
 @Controller('bookmarks')
 export class BookmarkController {

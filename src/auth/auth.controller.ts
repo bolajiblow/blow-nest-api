@@ -9,12 +9,18 @@ import {
 import { AuthService } from './auth.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from './dto/auth.dto';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('signup')
+  @ApiCreatedResponse({
+    description : 'successfully created',
+    type :AuthDto
+  })
   signup(@Body() dto: AuthDto) {
     return this.authService.signup(dto);
   }
